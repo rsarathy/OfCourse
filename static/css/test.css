@@ -1,0 +1,149 @@
+.header {
+	color:#673489; 
+	font-size: 48px;
+}
+
+.intro-header
+{
+	text-align: center;
+}
+
+.box
+{
+	margin-right: 60px;
+	float: left;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+
+
+    background: #204B6D;
+    padding: 0px; 
+    width: 30px;  
+    height: 15px;
+}
+
+.big-box
+{
+	margin-right: 5px;
+	float: left;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	border-top-right-radius: 15px;
+	border-top-left-radius: 15px;
+	font-size: 10px;
+	text-align: center;
+	color: white;
+    background: #204B6D;
+    padding: 0px; 
+    width: 60px;  
+    height: 30px;
+}
+
+.sign-in-button
+{
+	margin-top: 10px;
+	margin-left: 12px;
+}
+.post
+{
+	color: #EB7F00;
+}
+
+#vijay {
+	color: RED;
+}
+
+.url
+{
+	color: #1695A3;
+}
+
+.arrow-up {
+	width: 0; 
+	height: 0; 
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid #EB7F00;
+	margin-bottom: 2px;
+}
+
+.arrow-down {
+	width: 0; 
+	height: 0; 
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-top: 7px solid #EB7F00;
+	margin-top: 2px;
+}
+
+.leftpanelheader
+{
+   color: #1695A3;
+   border-bottom: 1px solid #EB7F00;
+   width: 100%;
+   text-transform: uppercase;
+}
+
+.postentry
+{
+	margin-top: 30px;
+	margin-left: 10px;
+}
+
+
+
+.individual
+{
+	margin-top: 5px;
+}
+
+.input-entries
+{
+
+}
+
+.button
+{
+	margin-top:30px;
+}
+
+.image1
+{
+	height: 100%;
+	width: 100%;
+
+}
+
+
+.fp-panel {
+	margin: 20px 0px;
+}
+
+.fp-panel .image {
+	text-align: center;
+
+}
+
+.fp-panel .content {
+
+}
+
+.fp-panel .content .hdr {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 10px;
+
+}
+
+.fp-panel .content .description {
+	font-size: 14px;
+	font-weight: normal;
+
+}
+
+
+
+
+
