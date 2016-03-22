@@ -23,10 +23,6 @@ class Course:
 
 if __name__ == '__main__':
 	courses = []
-	
-	s = "rohit"
-	print "Hello %s" % s
-	
 	with open("courses.txt") as f:
 		for line in f:
 			data = line.strip().split("|")
