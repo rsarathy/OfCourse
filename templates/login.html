@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Of Course | Course Planner</title>
+	<title>Log In</title>
 	<meta name="generator" content="TextMate http://macromates.com/">
 	<meta name="author" content="Rohit Sarathy">
 
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
-    <p align="right"><a href="/login">Log In</a> | Sign Up</p>
-    {% if username %}
-        <p align="right">Welcome, {{ username }}</p>
-    {% endif %}
-	<h1>Welcome to Of Course!</h1>
-	<p><a href="/semesters">Create</a> a four-year plan.</p>
+    <form action="" method="POST">
+		<table>
+            {{ form.as_table }}
+        </table>
+        {% csrf_token %}
+        <input type="submit" value="Login">
+	</form>
 </body>
 </html>
