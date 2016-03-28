@@ -28,7 +28,6 @@ def add_course(request):
                   {"form": form, "courses": d, "errors": errors})
 
 def login(request):
-
     userid = ""
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -40,5 +39,14 @@ def login(request):
         form = LoginForm()
 
     return render(request, "login.html", {"form": form, "username": userid})
-# def home(request):
-#     return render(request, "index.html")
+
+# incomplete error checking
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            userid = form.cleaned_data["username"]
+            passwd = form.cleaned_data["password"]
+            confpd = form.cleaned_data["conf_pwd"]
+            return render(request, "index.html", {"username": userid})
+    return render(request, "signup.html", {})
