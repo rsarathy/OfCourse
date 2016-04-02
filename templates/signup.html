@@ -1,2 +1,17 @@
 {% include "base.html" %}
 <p>Sign up here.</p>
+
+{% if errors %}
+    <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<form action="" method="POST">
+    <table>
+        {{ form.as_table }}
+    </table>
+    {% csrf_token %}
+    <input type="submit" value="Sign Up">
+</form>

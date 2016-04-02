@@ -21,11 +21,20 @@ class CourseForm(forms.Form):
     class Meta:
         ordering = ["course"]
 
+class SaveForm():
+    pass
+
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=24, required=True)
     password = forms.CharField(max_length=32, widget=forms.PasswordInput(render_value=False))
 
+
+MAJORS = (
+    ('cs', 'Computer Science'),
+    ('ce', 'Computer Engineering'),
+)
 class SignupForm(forms.Form):
     username = forms.CharField(max_length=24, required=True)
     password = forms.CharField(max_length=32, widget=forms.PasswordInput(render_value=False))
     conf_pwd = forms.CharField(label=(u'Confirm Password'), max_length=32, widget=forms.PasswordInput(render_value=False))
+    major    = forms.ChoiceField(choices=MAJORS)
