@@ -8,7 +8,6 @@ d = []
 def add_course(request):
     errors = []
     c = ""
-    save = SaveForm()
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
@@ -27,7 +26,7 @@ def add_course(request):
     else:
         form = CourseForm()
     return render(request, "selection.html",
-                  {"save": save, "form": form, "courses": d, "errors": errors})
+                  {"form": form, "courses": d, "errors": errors})
 
 def login(request):
     userid = ""
