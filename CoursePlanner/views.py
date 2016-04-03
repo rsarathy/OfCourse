@@ -71,6 +71,9 @@ def signup(request):
             else:
                 user = User.objects.create_user(userid, email, passwd)
                 user.save()
+                # send_mail("Please verify your OfCourse Account",
+                #           "Thank you for registering with OfCourse.",
+                #           "rohit@sarathy.org", [email])
                 return render(request, "index.html", {"username": userid})
     else:
         form = SignupForm()
