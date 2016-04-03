@@ -5,7 +5,7 @@
 	
 	<table style="width:100%">
 		<tr>
-			<td><p><a href="/selection">Semester 1</a>:
+			<td><p><a href="/selection">Semester 1</a> ({{ credit }} credits):
                 {% for c in courses %}
                     {{ c }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}

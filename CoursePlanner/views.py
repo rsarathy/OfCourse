@@ -3,8 +3,13 @@ from django.shortcuts import render, render_to_response
 from django.core.mail import send_mail
 from CoursePlanner.forms import *
 from django.forms import forms
+from courses import Course, Catalog
+
+all_courses = Catalog("courses.txt").get_courses()
 
 d = []
+cr = [0, 0, 0, 0, 0, 0, 0, 0] # 8 semesters of credit
+
 def add_course(request):
     errors = []
     c = ""
@@ -14,19 +19,24 @@ def add_course(request):
             c = form.cleaned_data["course"]
             course_ = str(c)
             if 'save_semester' in request.POST:
-                return render(request, "semesters.html", {"courses": d})
+                return render(request, "semesters.html", {"courses": d, "credit": cr[0]})
             elif course_ in d:
                 errors.append("You are already taking that class.")
             elif 'add_course' in request.POST:
                 d.append(str(course_))
                 d.sort()
+                if course_ in all_courses:
+                    cr[0] += int(all_courses[course_].get_credit())
+                    # print all_courses[course_].get_credit()
+                # print cr
                 return render(request, "selection.html",
-                    {"form": form, "courses": d})
+                              {"form": form, "courses": d, "credit": cr[0]})
 
     else:
         form = CourseForm()
     return render(request, "selection.html",
-                  {"form": form, "courses": d, "errors": errors})
+                  {"form": form, "courses": d, "errors": errors, "credit": cr[0]})
+
 
 def login(request):
     userid = ""
@@ -40,6 +50,7 @@ def login(request):
         form = LoginForm()
 
     return render(request, "login.html", {"form": form, "username": userid})
+
 
 # incomplete error checking
 def signup(request):
@@ -61,3 +72,6 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, "signup.html", {"form": form, "errors": errors})
+
+def save_semester(request):
+    return render(request, "semesters.html", {"courses": d, "credit": cr[0]})
