@@ -5,7 +5,7 @@
 	
 	<table style="width:100%">
 		<tr>
-			<td><p><a href="/selection">Semester 1</a> ({{ credit }} credits):
+			<td><p><a href="/selection1">Semester 1</a> ({{ credit }} credits):
                 {% for c in courses %}
                     {{ c }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}
@@ -21,6 +21,7 @@
 		<tr><td><p>Semester 7</p></td>
 			<td><p>Semester 8</p></td></tr>
 	</table>
+    <p>Total Credit Hours: {{ cr_hours }}</p>
 	
 	<p><a class="btn btn-default btn-sm" href="#" role="button">Save your plan</a></p>
 	<p><a class="btn btn-default btn-sm" href="#" role="button">Print your plan</a></p>

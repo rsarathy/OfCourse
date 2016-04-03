@@ -34,3 +34,13 @@ class SignupForm(forms.Form):
     password = forms.CharField(max_length=32, widget=forms.PasswordInput(render_value=False))
     conf_pwd = forms.CharField(label=(u'Confirm Password'), max_length=32, widget=forms.PasswordInput(render_value=False))
     major    = forms.ChoiceField(choices=MAJORS)
+
+    def clean_signup(self):
+        password = self.cleaned_data["password"]
+        confirmp = self.cleaned_data["conf_pwd"]
+
+        if password != confirmp:
+            raise forms.ValidationError("Passwords do not match.")
+
+    class Meta:
+        ordering = ["username"]

@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^login/$', 'CoursePlanner.views.login'),
     url(r'^signup/$', 'CoursePlanner.views.signup'),
     url(r'^semesters/$', 'CoursePlanner.views.save_semester'),
-    url(r'^selection/$', 'CoursePlanner.views.add_course'),
+    url(r'^selection[1-8]/$', 'CoursePlanner.views.add_course'),
 ]

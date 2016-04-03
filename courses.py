@@ -20,6 +20,7 @@ class Course:
 	def to_print(self):
 		print "%s - %s (%s credit hours):\n%s" % (self.get_id(), self.get_name(), self.get_credit(), self.get_descr())
 
+
 class Catalog:
 	def __init__(self, filename):
 		self.courses = {}
@@ -30,14 +31,14 @@ class Catalog:
 				_name = data[1]
 				_descr = data[2]
 				_credit = data[3]
-				
+
 				c = Course(_id, _name, _descr, _credit)
 				self.courses[_id] = c
-	
+
 	def show(self):
 		for c in sorted(self.courses.keys()):
 			self.courses[c].to_print()
-	
+
 	def get_courses(self):
 		return self.courses
 

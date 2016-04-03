@@ -19,7 +19,7 @@ def add_course(request):
             c = form.cleaned_data["course"]
             course_ = str(c)
             if 'save_semester' in request.POST:
-                return render(request, "semesters.html", {"courses": d, "credit": cr[0]})
+                return save_semester(request)
             elif course_ in d:
                 errors.append("You are already taking that class.")
             elif 'add_course' in request.POST:
@@ -27,11 +27,6 @@ def add_course(request):
                 d.sort()
                 if course_ in all_courses:
                     cr[0] += int(all_courses[course_].get_credit())
-                    # print all_courses[course_].get_credit()
-                # print cr
-                return render(request, "selection.html",
-                              {"form": form, "courses": d, "credit": cr[0]})
-
     else:
         form = CourseForm()
     return render(request, "selection.html",
@@ -51,7 +46,6 @@ def login(request):
 
     return render(request, "login.html", {"form": form, "username": userid})
 
-
 # incomplete error checking
 def signup(request):
     errors = []
@@ -65,13 +59,13 @@ def signup(request):
             # controlflow bugs
             if len(passwd) < 8:
                 errors.append("Password must be at least 8 characters.")
-            if passwd != confpd:
+            elif passwd != confpd:
                 errors.append("Passwords do not match.")
-
-            return render(request, "index.html", {"username": userid})
+            else:
+                return render(request, "index.html", {"username": userid})
     else:
         form = SignupForm()
     return render(request, "signup.html", {"form": form, "errors": errors})
 
 def save_semester(request):
-    return render(request, "semesters.html", {"courses": d, "credit": cr[0]})
+    return render(request, "semesters.html", {"courses": d, "credit": cr[0], "cr_hours": sum(cr)})
