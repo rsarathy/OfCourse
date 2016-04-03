@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
 from django.core.mail import send_mail
@@ -40,7 +42,11 @@ def login(request):
         if form.is_valid():
             userid = form.cleaned_data["username"]
             passwd = form.cleaned_data["password"]
-            return render(request, "index.html", {"username": userid})
+            user = authenticate(username=userid, password=passwd)
+            if user is not None and user.is_active:
+                return render(request, "index.html", {"username": userid})
+            else:
+                print "Invalid login."
     else:
         form = LoginForm()
 
@@ -53,6 +59,7 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             userid = form.cleaned_data["username"]
+            email  = form.cleaned_data["email"]
             passwd = form.cleaned_data["password"]
             confpd = form.cleaned_data["conf_pwd"]
 
@@ -62,6 +69,8 @@ def signup(request):
             elif passwd != confpd:
                 errors.append("Passwords do not match.")
             else:
+                user = User.objects.create_user(userid, email, passwd)
+                user.save()
                 return render(request, "index.html", {"username": userid})
     else:
         form = SignupForm()
