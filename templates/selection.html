@@ -20,7 +20,7 @@
 
     <h3>Courses Taken</h3>
     {% for c in courses %}
-        <li>{{ c }}</li>
+        <a class="btn btn-primary btn-sm" role="button">{{ c }}</a><br>
     {% endfor %}
     <p>Credit Hours Taken: {{ credit }}/18</p>
 

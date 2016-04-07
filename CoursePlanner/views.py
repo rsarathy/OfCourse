@@ -81,3 +81,6 @@ def signup(request):
 
 def save_semester(request):
     return render(request, "semesters.html", {"courses": d, "credit": cr[0], "cr_hours": sum(cr)})
+
+def plans(request):
+    pass

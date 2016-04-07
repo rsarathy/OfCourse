@@ -11,7 +11,8 @@
 <body>
     {% if username %}
         <p align="right">Welcome, {{ username }}<br>
-        <a>Logout</a></p>
+            <a href="/plans">My Saved Plans</a><br>
+            <a>Logout</a></p>
     {% else %}
         <p align="right"><a href="/login">Log In</a> | <a href="/signup">Sign Up</a></p>
     {% endif %}

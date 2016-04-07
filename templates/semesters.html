@@ -7,7 +7,7 @@
 		<tr>
 			<td><p><a href="/selection1">Semester 1</a> ({{ credit }} credits):
                 {% for c in courses %}
-                    {{ c }}{% if not forloop.last %}, {% endif %}
+                    <a class="btn btn-primary btn-sm" role="button">{{ c }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </td>
 				<td><p>Semester 2</p></td></tr>
