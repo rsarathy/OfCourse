@@ -1,13 +1,6 @@
 {% load staticfiles %}
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Of Course | Course Planner</title>
-	<meta name="generator" content="TextMate http://macromates.com/">
-	<meta name="author" content="Rohit Sarathy">
-
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-</head>
+{% include "base.html" %}
+<html>
 <body>
     {% if username %}
         <p align="right">Welcome, {{ username }}<br>
@@ -20,3 +13,4 @@
 	<p><a href="/semesters">Create</a> a four-year plan.</p>
 </body>
 </html>
+
