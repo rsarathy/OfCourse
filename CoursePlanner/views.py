@@ -9,12 +9,18 @@ from courses import Course, Catalog
 
 all_courses = Catalog("courses.txt").get_courses()
 
-d = []
+d = [[],[],[],[],[],[],[],[]]
 cr = [0, 0, 0, 0, 0, 0, 0, 0] # 8 semesters of credit
+urls = {}
+for i in range(1,9):
+    U = "Semester " + str(i)
+    L = "selection" + str(i)
+    urls[U] = L
 
 def add_course(request):
     errors = []
     c = ""
+    i = int(request.path[-2]) - 1
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
@@ -22,18 +28,22 @@ def add_course(request):
             course_ = str(c)
             if 'save_semester' in request.POST:
                 return save_semester(request)
-            elif course_ in d:
-                errors.append("You are already taking that class.")
+            elif course_ in d[i]: # elif course_ in d:
+                errors.append("You are already taking that class this semester.")
             elif 'add_course' in request.POST:
-                d.append(str(course_))
-                d.sort()
+                d[i].append(str(course_))
+                d[i].sort()
                 if course_ in all_courses:
-                    cr[0] += int(all_courses[course_].get_credit())
+                    cr[i] += int(all_courses[course_].get_credit())
     else:
         form = CourseForm()
     return render(request, "selection.html",
-                  {"form": form, "courses": d, "errors": errors, "credit": cr[0]})
-
+        {
+        "form": form,
+        "courses": d[i],
+        "errors": errors,
+        "credit": cr[i],
+        })
 
 def login(request):
     userid = ""
@@ -49,8 +59,11 @@ def login(request):
                 print "Invalid login."
     else:
         form = LoginForm()
-
-    return render(request, "login.html", {"form": form, "username": userid})
+    return render(request, "login.html",
+        {
+        "form": form,
+        "username": userid,
+        })
 
 # incomplete error checking
 def signup(request):
@@ -77,10 +90,20 @@ def signup(request):
                 return render(request, "index.html", {"username": userid})
     else:
         form = SignupForm()
-    return render(request, "signup.html", {"form": form, "errors": errors})
+    return render(request, "signup.html",
+        {
+        "form": form,
+        "errors": errors,
+        })
 
 def save_semester(request):
-    return render(request, "semesters.html", {"courses": d, "credit": cr[0], "cr_hours": sum(cr)})
+    return render(request, "semesters.html",
+        {
+        "urls": urls,
+        "courses": d,
+        "credit": cr,
+        "cr_hours": sum(cr),
+        })
 
 def plans(request):
     pass

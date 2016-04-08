@@ -1,27 +1,29 @@
+{% load cplanner_extras %}
 {% include "base.html" %}
 <body>
 	<h1>Let's get started.</h1>
 	<p>Select a semester.</p>
 	
 	<table style="width:100%">
-		<tr>
-			<td><p><a href="/selection1">Semester 1</a> ({{ credit }} credits):
-                {% for c in courses %}
-                    <a class="btn btn-primary btn-sm" role="button">{{ c }}</a>{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </td>
-				<td><p>Semester 2</p></td></tr>
-			
-		<tr><td><p>Semester 3</p></td>
-			<td><p>Semester 4</p></td></tr>
-			
-		<tr><td><p>Semester 5</p></td>
-			<td><p>Semester 6</p></td></tr>
-			
-		<tr><td><p>Semester 7</p></td>
-			<td><p>Semester 8</p></td></tr>
+        {% for semester, link in urls.items %}
+            <tr>
+                <td>
+                    <p>
+                        <a class="btn btn-default btn-sm" href="../{{ link }}">{{ semester }}</a>
+                        ({{ credit|get_at_index:forloop.counter0 }} credits):
+                        {% with co=courses|get_at_index:forloop.counter0 %}
+                        {% for c in co %}
+                            <a class="btn btn-primary btn-sm" role="button">{{ c }}</a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                        {% endwith %}
+                    </p>
+
+                </td>
+            </tr>
+        {% endfor %}
 	</table>
-    <p>Total Credit Hours: {{ cr_hours }}</p>
+
+    <p><b>Total Credit Hours: {{ cr_hours }}</b></p>
 	
 	<p><a class="btn btn-default btn-sm" href="#" role="button">Save your plan</a></p>
 	<p><a class="btn btn-default btn-sm" href="#" role="button">Print your plan</a></p>
