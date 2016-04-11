@@ -23,9 +23,12 @@
 	</form>
 
     <h3>Courses Taken</h3>
+    <form action="" method="POST">
     {% for c in courses %}
-        <a class="btn btn-primary btn-sm" role="button">{{ c }}</a><br>
+        <input type="submit" value="{{ c }}" class="btn btn-primary btn-sm" name="__{{ c }}"><br>
+        {% csrf_token %}
     {% endfor %}
+    </form>
     <p>Credit Hours Taken: {{ credit }}/18</p>
 
 </body>
