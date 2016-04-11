@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from django.core.mail import send_mail
 from CoursePlanner.forms import *
 from django.forms import forms
@@ -23,18 +23,25 @@ def add_course(request):
     i = int(request.path[-2]) - 1
     if request.method == 'POST':
         form = CourseForm(request.POST)
+        if 'save_semester' in request.POST:
+            return save_semester(request)
         if form.is_valid():
             c = form.cleaned_data["course"]
             course_ = str(c)
-            if 'save_semester' in request.POST:
-                return save_semester(request)
-            elif course_ in d[i]: # elif course_ in d:
-                errors.append("You are already taking that class this semester.")
-            elif 'add_course' in request.POST:
-                d[i].append(str(course_))
-                d[i].sort()
-                if course_ in all_courses:
-                    cr[i] += int(all_courses[course_].get_credit())
+            if 'add_course' in request.POST:
+                if course_ in d[i]:
+                    errors.append("You are already taking that class this semester.")
+                else: #addition
+                    d[i].append(str(course_))
+                    d[i].sort()
+                    if course_ in all_courses:
+                        cr[i] += int(all_courses[course_].get_credit())
+        else: #removal
+            cin = sorted(request.POST)[0][2:]
+            if cin in d[i]:
+                d[i].remove(cin)
+                cr[i] -= int(all_courses[cin].get_credit())
+                form = CourseForm()
     else:
         form = CourseForm()
     return render(request, "selection.html",
