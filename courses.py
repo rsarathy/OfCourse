@@ -3,10 +3,16 @@ class Course:
 		self.ident = ident
 		self.name = name
 		self.descr = descr
-		self.credit = credit
+		self.credit = int(credit)
+		self.opacity = float(credit)/4.0
 
 	def get_id(self):
 		return self.ident
+
+	def get_department(self):
+		id = self.get_id()
+		dept = id.split(" ")
+		return dept[0]
 
 	def get_name(self):
 		return self.name
