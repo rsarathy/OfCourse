@@ -13,7 +13,7 @@
                         ({{ credit|get_at_index:forloop.counter0 }} credits):
                         {% with co=courses|get_at_index:forloop.counter0 %}
                             {% for c in co %}
-                                <a class="btn btn-primary btn-sm" role="button">{{ c }}</a>{% if not forloop.last %}, {% endif %}
+                                <a class="btn btn-primary btn-sm">{{ c }}</a>{% if not forloop.last %}, {% endif %}
                             {% endfor %}
                         {% endwith %}
                     </p>
@@ -24,6 +24,6 @@
 
     <p><b>Total Credit Hours: {{ cr_hours }}</b></p>
 	
-	<p><a class="btn btn-default btn-sm" href="#" role="button">Save your plan</a></p>
+	<p><a class="btn btn-default btn-sm" href="/" role="button">Save your plan</a></p>
 	<p><a class="btn btn-default btn-sm" href="#" role="button">Print your plan</a></p>
 </body>

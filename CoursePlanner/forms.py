@@ -17,9 +17,6 @@ class CourseForm(forms.Form):
         ret = cu.group(1).upper() + " " + cu.group(2).strip()
         return ret
 
-    class Meta:
-        ordering = ["course"]
-
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=24, required=True)
     password = forms.CharField(max_length=32, widget=forms.PasswordInput(render_value=False))

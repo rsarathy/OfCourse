@@ -16,7 +16,6 @@ def add_course(request):
     errors = []
     c = ""
     i = int(request.path[-2]) - 1
-    print request.POST
     if request.method == 'POST' and "Remove" not in request.POST.values():
         form = CourseForm(request.POST)
         if 'save_semester' in request.POST:
