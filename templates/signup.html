@@ -2,11 +2,13 @@
 <p>Sign up here.</p>
 
 {% if errors %}
+    <div class="alert alert-danger">
     <ul>
         {% for error in errors %}
             <li>{{ error }}</li>
         {% endfor %}
     </ul>
+    </div>
 {% endif %}
 <form action="" method="POST">
     <table>

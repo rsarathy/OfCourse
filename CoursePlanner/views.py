@@ -1,13 +1,10 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from django.core.mail import send_mail
 from CoursePlanner.forms import *
-from django.forms import forms
-from courses import Course, Catalog
+from CoursePlanner.models import Course
 
-all_courses = Catalog("courses.txt").get_courses()
+# all_courses = Catalog("courses.txt").get_courses()
 
 d = [[],[],[],[],[],[],[],[]]
 cr = [0, 0, 0, 0, 0, 0, 0, 0] # 8 semesters of credit
@@ -27,21 +24,26 @@ def add_course(request):
             return save_semester(request)
         if form.is_valid():
             c = form.cleaned_data["course"]
-            course_ = str(c)
+            ident = str(c)
             if 'add_course' in request.POST:
-                if course_ in d[i]:
+                query = Course.objects.filter(identifier=ident)
+                if len(query) == 0:
+                    errors.append("That course does not exist.")
+                elif query[0] in d[i]:
                     errors.append("You are already taking that class this semester.")
-                else: #addition
-                    d[i].append(str(course_))
-                    d[i].sort()
-                    if course_ in all_courses:
-                        cr[i] += int(all_courses[course_].get_credit())
-        else: #removal
-            cin = sorted(request.POST)[0][2:]
-            if cin in d[i]:
-                d[i].remove(cin)
-                cr[i] -= int(all_courses[cin].get_credit())
-                form = CourseForm()
+                else:
+                    d[i].append(query[0])
+                    d[i].sort(key=lambda x: x.identifier)
+                    cr[i] += query[0].get_credit()
+        else:   #removal
+            cin = sorted(request.POST)
+            to_remove = str(cin[1][7:])
+            for c in d[i]:
+                if c.identifier == to_remove:
+                    d[i].remove(c)
+                    cr[i] -= c.get_credit()
+                    break
+            form = CourseForm()
     else:
         form = CourseForm()
     return render(request, "selection.html",
@@ -50,6 +52,7 @@ def add_course(request):
         "courses": d[i],
         "errors": errors,
         "credit": cr[i],
+        "sem_number": i+1,
         })
 
 def login(request):
