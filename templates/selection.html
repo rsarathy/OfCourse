@@ -33,7 +33,9 @@
     {% for c in courses %}
         <a role="button"
            class="btn btn-primary"
-           id="_{{ c | strip }}">{{ c }}</a>
+           name="toggler"
+           id="{{ forloop.counter }}"
+           value="{{ c.identifier }}">{{ c.identifier }}</a>
         <br>
     {% endfor %}
     </div>
@@ -42,8 +44,9 @@
          style="background-color:#fafafa">
          <h3>Course Information</h3>
 	    {% for c in courses %}
-	    <div id="{{ c | strip }}"
-	         style="display:none">
+            <div id="crs-{{ forloop.counter }}"
+                 class="toHide"
+                 style="display:none">
             <h4>{{ c.identifier }}</h4>
 	        <b>{{ c.name }}</b>
 	        <p>{{ c.description }}</p>
@@ -57,16 +60,19 @@
 	            </input>
 	        </form>
 	    </div>
-        <script>
-        $(function() {
-            $("#_{{ c | strip }}").click(function() {
-                $("#{{ c | strip }}").toggle();
-            });
-        });
-        </script>
     	{% endfor %}
     </div>
 </div>
+
+    <script>
+$(function() {
+	$("[name=toggler]").click(function(){
+		$('.toHide').hide();
+		$("#crs-"+$(this).attr('id')).toggle('medium');
+	});
+});
+    </script>
+
     <div id="seminfo">
     <p>
         <b>Credit Hours: {{ credit }}/18</b>
@@ -76,8 +82,7 @@
         #seminfo
         {
             position: absolute;
-            bottom: 33%; /** percentage FROM bottom here, currently this is at the bottom **/
+            bottom: 33%;
         }
     </style>
-
 </body>
