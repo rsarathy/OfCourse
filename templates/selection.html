@@ -1,5 +1,6 @@
 {% include "base.html" %}
 {% load cplanner_extras %}
+{% load crispy_forms_tags %}
 <title>Of Course | Selection</title>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
@@ -15,10 +16,11 @@
 		</ul>
         </div>
 	{% endif %}
-<div>
+    <div class="row">
+        <div class="col-sm-4 col-md-3">
         <form action="" method="POST">
 		    <table>
-                {{ form.as_table }}
+                {{ form | crispy }}
             </table>
             {% csrf_token %}
             <p>
@@ -26,7 +28,8 @@
                 <input class="btn btn-default btn-sm" type="submit" value="Save Semester" name="save_semester">
             </p>
 	    </form>
-</div>
+        </div>
+    </div>
 <div class="row">
     <div class="col-sm-6">
     <h3>Courses Taken</h3>

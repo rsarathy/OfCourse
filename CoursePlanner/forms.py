@@ -1,4 +1,5 @@
 from django import forms
+from CoursePlanner.models import Course
 import re
 
 __author__ = 'rohit'
@@ -14,8 +15,12 @@ class CourseForm(forms.Form):
         cu = re.search('([a-zA-z]{2,4})( ?[0-5][0-9]{2})$', course)
         if cu is None:
 	        raise forms.ValidationError("Invalid course. Enter a course in one of the following formats: SUBJ 123, SUBJ123, subj 123, subj123.\n")
-        ret = cu.group(1).upper() + " " + cu.group(2).strip()
-        return ret
+
+        ident = cu.group(1).upper() + " " + cu.group(2).strip()
+        query = Course.objects.filter(identifier=ident)
+        if len(query) == 0:
+            raise forms.ValidationError("That course does not exist.")
+        return query[0]
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=24, required=True)

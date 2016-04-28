@@ -22,17 +22,15 @@ def add_course(request):
             return save_semester(request)
         if form.is_valid():
             c = form.cleaned_data["course"]
-            ident = str(c)
+            # ident = str(c)
             if 'add_course' in request.POST:
-                query = Course.objects.filter(identifier=ident)
-                if len(query) == 0:
-                    errors.append("That course does not exist.")
-                elif query[0] in d[i]:
+                # query = Course.objects.filter(identifier=ident)
+                if c in d[i]: # should raise form validation error
                     errors.append("You are already taking that class this semester.")
                 else:
-                    d[i].append(query[0])
+                    d[i].append(c)
                     d[i].sort(key=lambda x: x.identifier)
-                    cr[i] += query[0].get_credit()
+                    cr[i] += c.get_credit()
     elif request.method == 'POST' and "Remove" in request.POST.values():   #removal
         cin = sorted(request.POST)
         to_remove = str(cin[1][7:])
@@ -42,8 +40,7 @@ def add_course(request):
                 cr[i] -= c.get_credit()
                 break
         form = CourseForm()
-    else:
-        form = CourseForm()
+    form = CourseForm()
     return render(request, "selection.html",
         {
         "form": form,
