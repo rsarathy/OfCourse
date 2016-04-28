@@ -24,6 +24,7 @@ class LoginForm(forms.Form):
 MAJORS = (
     ('cs', 'Computer Science'),
     ('ce', 'Computer Engineering'),
+    ('ee', 'Electrical Engineering'),
 )
 class SignupForm(forms.Form):
     username = forms.CharField(max_length=24, required=True)

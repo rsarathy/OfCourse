@@ -1,6 +1,7 @@
 {% include "base.html" %}
+{% load crispy_forms_tags %}
 <title>Of Course | Sign Up</title>
-<p>Sign up here.</p>
+<h3>Sign up</h3>
 
 {% if errors %}
     <div class="alert alert-danger">
@@ -11,10 +12,14 @@
     </ul>
     </div>
 {% endif %}
-<form action="" method="POST">
-    <table>
-        {{ form.as_table }}
-    </table>
-    {% csrf_token %}
-    <input type="submit" value="Sign Up">
-</form>
+<div class="row">
+	<div class="col-sm-6 col-md-3">
+		<form action="" method="POST">
+			<table>
+				{{ form | crispy }}
+			</table>
+			{% csrf_token %}
+			<input type="submit" value="Sign Up">
+		</form>
+	</div>
+</div>
