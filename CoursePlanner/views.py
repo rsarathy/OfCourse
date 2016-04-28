@@ -22,9 +22,7 @@ def add_course(request):
             return save_semester(request)
         if form.is_valid():
             c = form.cleaned_data["course"]
-            # ident = str(c)
             if 'add_course' in request.POST:
-                # query = Course.objects.filter(identifier=ident)
                 if c in d[i]: # should raise form validation error
                     errors.append("You are already taking that class this semester.")
                 else:
@@ -39,7 +37,6 @@ def add_course(request):
                 d[i].remove(c)
                 cr[i] -= c.get_credit()
                 break
-        form = CourseForm()
     form = CourseForm()
     return render(request, "selection.html",
         {
