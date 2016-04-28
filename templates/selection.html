@@ -1,12 +1,10 @@
 {% include "base.html" %}
 {% load cplanner_extras %}
 {% load crispy_forms_tags %}
-<title>Of Course | Selection</title>
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
+<title>Of Course | Selection</title>
 <body>
     <h1>Semester {{ sem_number }}</h1>
-
     {% if errors %}
         <div class="alert alert-danger">
 		<ul>
