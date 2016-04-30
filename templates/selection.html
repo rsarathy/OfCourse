@@ -75,15 +75,22 @@ $(function() {
     </script>
 
     <div id="seminfo">
-    <p>
-        <b>Credit Hours: {{ credit }}/18</b>
-    </p>
+        <p><b>Credit Hours: {{ credit }}/18</b></p>
+        <p><b>Semester Difficulty: {{ difficulty }}</b></p>
     </div>
-    <style>
-        #seminfo
-        {
-            position: absolute;
-            bottom: 33%;
-        }
-    </style>
+
+    <div>
+        <h4>In this semester, other students took...</h4>
+        <ul>
+            <li>CS 125</li>
+            <li>MATH 241</li>
+        </ul>
+    </div>
+{#    <style>#}
+{#        #seminfo#}
+{#        {#}
+{#            position: absolute;#}
+{#            bottom: 33%;#}
+{#        }#}
+{#    </style>#}
 </body>

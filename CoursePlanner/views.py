@@ -1,5 +1,3 @@
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 from django.shortcuts import render
 from CoursePlanner.forms import *
 from CoursePlanner.models import Course
@@ -16,6 +14,7 @@ def add_course(request):
     errors = []
     c = ""
     i = int(request.path[-2]) - 1
+    difficulty = 0.5
     if request.method == 'POST' and "Remove" not in request.POST.values():
         form = CourseForm(request.POST)
         if 'save_semester' in request.POST:
@@ -37,13 +36,16 @@ def add_course(request):
                 d[i].remove(c)
                 cr[i] -= c.get_credit()
                 break
-    form = CourseForm()
+        form = CourseForm()
+    else:
+        form = CourseForm()
     return render(request, "selection.html",
         {
         "form": form,
         "courses": d[i],
         "errors": errors,
         "credit": cr[i],
+        "difficulty": difficulty,
         "sem_number": i+1,
         })
 
