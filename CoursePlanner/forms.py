@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from CoursePlanner.models import Course
 import re
 
@@ -31,19 +32,34 @@ MAJORS = (
     ('ce', 'Computer Engineering'),
     ('ee', 'Electrical Engineering'),
 )
+
 class SignupForm(forms.Form):
     username = forms.CharField(max_length=24, required=True)
+    password = forms.CharField(min_length=8, max_length=32, widget=forms.PasswordInput(render_value=False), required=True)
+    conf_pwd = forms.CharField(min_length=8, label=(u'Confirm Password'), max_length=32, widget=forms.PasswordInput(render_value=False), required=True)
     email    = forms.EmailField(max_length=64, required=True)
-    password = forms.CharField(max_length=32, widget=forms.PasswordInput(render_value=False))
-    conf_pwd = forms.CharField(label=(u'Confirm Password'), max_length=32, widget=forms.PasswordInput(render_value=False))
     major    = forms.ChoiceField(choices=MAJORS)
 
-    # def clean_signup(self):
-    #     password = self.cleaned_data["password"]
-    #     confirmp = self.cleaned_data["conf_pwd"]
-    #
-    #     if password != confirmp:
-    #         raise forms.ValidationError("Passwords do not match.")
+    def clean_username(self):
+        userid = self.cleaned_data["username"]
+        if re.search("[a-z0-9_-]{6,24}$", userid) is None:
+            raise forms.ValidationError("Username must have 6-24 alphanumeric characters.")
+        if User.objects.filter(username=userid).exists():
+            raise forms.ValidationError("Username already taken.")
+        return userid
+
+    def clean_conf_pwd(self):
+        password = self.cleaned_data["password"]
+        conf_pwd = self.cleaned_data["conf_pwd"]
+        if password and conf_pwd and password != conf_pwd:
+            raise forms.ValidationError("Passwords do not match.")
+        return conf_pwd
+
+    def clean_email(self):
+        em = self.cleaned_data["email"]
+        if User.objects.filter(email=em).exists():
+            raise forms.ValidationError("Email is already currently in use.")
+        return em
 
     class Meta:
         ordering = ["username"]

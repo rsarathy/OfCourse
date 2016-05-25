@@ -20,31 +20,18 @@ def login(request):
     return render(request, "login.html", {"form": form, "username": userid})
 
 def signup(request):
-    errors = []
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
             userid = form.cleaned_data["username"]
             email  = form.cleaned_data["email"]
             passwd = form.cleaned_data["password"]
-            confpd = form.cleaned_data["conf_pwd"]
-
-            # controlflow bugs
-            if len(passwd) < 8:
-                errors.append("Password must be at least 8 characters.")
-            elif passwd != confpd:
-                errors.append("Passwords do not match.")
-            else:
-                user = User.objects.create_user(userid, email, passwd)
-                user.save()
-                # send_mail("Please verify your OfCourse Account",
-                #           "Thank you for registering with OfCourse.",
+            user = User.objects.create_user(userid, email, passwd)
+            user.save()
+                # send_mail("Please verify your BerryHub Account",
+                #           "Thank you for registering with BerryHub.",
                 #           "rohit@sarathy.org", [email])
-                return render(request, "index.html", {"username": userid})
+            return render(request, "index.html", {"user": user})
     else:
         form = SignupForm()
-    return render(request, "signup.html",
-        {
-        "form": form,
-        "errors": errors,
-        })
+    return render(request, "signup.html", {"form": form})
