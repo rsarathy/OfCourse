@@ -1,29 +1,30 @@
+{% extends "base.html" %}
 {% load cplanner_extras %}
-{% include "base.html" %}
-<body>
-	<h1>Let's get started.</h1>
-	<p>Select a semester.</p>
-	
-	<table style="width:100%">
-        {% for semester, link in urls.items %}
-            <tr>
-                <td>
-                    <p>
-                        <a class="btn btn-default btn-sm" href="../{{ link }}">{{ semester }}</a>
-                        ({{ credit|get_at_index:forloop.counter0 }} credits):
-                        {% with co=courses|get_at_index:forloop.counter0 %}
-                            {% for c in co %}
-                                <a class="btn btn-primary btn-sm">{{ c }}</a>{% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        {% endwith %}
-                    </p>
-                </td>
-            </tr>
-        {% endfor %}
-	</table>
 
-    <p><b>Total Credit Hours: {{ cr_hours }}</b></p>
-	
-	<p><a class="btn btn-default btn-sm" href="/" role="button">Save your plan</a></p>
-	<p><a class="btn btn-default btn-sm" href="#" role="button">Print your plan</a></p>
-</body>
+{% block content %}
+<h1>Let's get started.</h1>
+<p>Select a semester.</p>
+
+<table style="width:100%">
+    {% for semester, link in urls.items %}
+        <tr>
+            <td>
+                <p>
+                    <a class="btn btn-default btn-sm" href="../{{ link }}">{{ semester }}</a>
+                    ({{ credit|get_at_index:forloop.counter0 }} credits):
+                    {% with co=courses|get_at_index:forloop.counter0 %}
+                        {% for c in co %}
+                            <a class="btn btn-primary btn-sm">{{ c }}</a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                </p>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+<p><b>Total Credit Hours: {{ cr_hours }}</b></p>
+
+<p><a class="btn btn-default btn-sm" href="/" role="button">Save your plan</a></p>
+<p><a class="btn btn-default btn-sm" href="#" role="button">Print your plan</a></p>
+{% endblock %}

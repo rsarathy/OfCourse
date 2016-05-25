@@ -1,9 +1,9 @@
-{% include "base.html" %}
+{% extends "base.html" %}
 {% load cplanner_extras %}
 {% load crispy_forms_tags %}
 
+{% block content %}
 <title>Of Course | Selection</title>
-<body>
     <h1>Semester {{ sem_number }}</h1>
     {% if errors %}
         <div class="alert alert-danger">
@@ -86,4 +86,4 @@ $(function() {
             <li>MATH 241</li>
         </ul>
     </div>
-</body>
+{% endblock %}

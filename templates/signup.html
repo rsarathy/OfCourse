@@ -1,5 +1,7 @@
-{% include "base.html" %}
+{% extends "base.html" %}
 {% load crispy_forms_tags %}
+
+{% block content %}
 <title>Of Course | Sign Up</title>
 <h3>Sign up</h3>
 
@@ -23,3 +25,4 @@
 		</form>
 	</div>
 </div>
+{% endblock %}
